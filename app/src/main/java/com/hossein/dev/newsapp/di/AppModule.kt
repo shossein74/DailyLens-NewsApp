@@ -9,6 +9,7 @@ import com.hossein.dev.newsapp.domain.usecases.SaveAppEntry
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -20,13 +21,13 @@ object AppModule {
     @Singleton
     fun provideLocalUserManger(
         application: Application
-    ): LocalUserManager = LocalUserManagerImpl(application)
+    ): LocalUserManager = LocalUserManagerImpl(context = application)
 
     @Provides
     @Singleton
-    fun provideAppEntryUserCases(
+    fun provideAppEntryUseCases(
         localUserManager: LocalUserManager
-    ) = AppEntryUseCases(
+    ): AppEntryUseCases = AppEntryUseCases(
         readAppEntry = ReadAppEntry(localUserManager),
         saveAppEntry = SaveAppEntry(localUserManager)
     )

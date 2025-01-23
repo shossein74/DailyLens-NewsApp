@@ -14,14 +14,7 @@
         android:theme="@style/Theme.NewsApp"
         tools:targetApi="31">
         <activity
-            android:name=".basic_tutorial.FirstActivity"
-            android:exported="true"
-            android:label="@string/title_activity_first"
-            android:theme="@style/App.Splash.Theme" >
-
-        </activity>
-        <activity
-            android:name=".MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.NewsApp">
             <intent-filter>

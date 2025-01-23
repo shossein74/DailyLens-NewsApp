@@ -2,25 +2,20 @@ package com.hossein.dev.newsapp.presentation.onboarding.components
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -36,7 +31,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen(modifier: Modifier = Modifier) {
+fun OnBoardingScreen(
+    event: (OnBoardingEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val pagerState = rememberPagerState(initialPage = 0) {
         onboardingPages.size
     }
@@ -58,13 +56,19 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
         //verticalArrangement = Arrangement.SpaceBetween
     ) {
         Box(modifier = Modifier.fillMaxHeight(fraction = 1f)) {
-            HorizontalPager(state = pagerState, pageSize = PageSize.Fill, verticalAlignment = Alignment.Top) { index ->
+            HorizontalPager(
+                state = pagerState,
+                pageSize = PageSize.Fill,
+                verticalAlignment = Alignment.Top
+            ) { index ->
                 OnBoardingPage(page = onboardingPages[index])
             }
         }
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .align(alignment = Alignment.BottomCenter)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(alignment = Alignment.BottomCenter)
+        ) {
             Row(
                 Modifier
                     .fillMaxWidth()
@@ -83,7 +87,7 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                ActionButtons(pagerState = pagerState, totalPages = onboardingPages.size)
+                ActionButtons(pagerState = pagerState, totalPages = onboardingPages.size, event)
             }
         }
     }
@@ -92,7 +96,7 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ActionButtons(pagerState: PagerState, totalPages: Int) {
+private fun ActionButtons(pagerState: PagerState, totalPages: Int, event: (OnBoardingEvent) -> Unit) {
     val scope = rememberCoroutineScope()
 
     val isFirstPage = pagerState.currentPage == 0
@@ -117,6 +121,8 @@ private fun ActionButtons(pagerState: PagerState, totalPages: Int) {
                     animationSpec = tween(durationMillis = 300)
                 )
             }
+        } else {
+            event(OnBoardingEvent.SaveAppEntry)
         }
     }
 }
@@ -125,6 +131,6 @@ private fun ActionButtons(pagerState: PagerState, totalPages: Int) {
 @Composable
 private fun OnBoardingScreenPreview() {
     NewsAppTheme {
-        OnBoardingScreen()
+        OnBoardingScreen(event = {})
     }
 }
