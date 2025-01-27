@@ -97,5 +97,5 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
 
-    runtimeOnly(libs.accompanist.systemuicontroller)
+    implementation(libs.androidx.core.splashscreen)
 }

@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor(
     private val appEntryUseCases: AppEntryUseCases
 ): ViewModel() {
 
-    var splashCondition by mutableStateOf(false)
+    var splashCondition by mutableStateOf(true)
         private set
 
     var startDestination by mutableStateOf(Route.AppStartNavigation.route)
@@ -31,8 +31,7 @@ class MainViewModel @Inject constructor(
             } else {
                 Route.AppStartNavigation.route
             }
-
-            delay(300)
+            delay(2000)
             splashCondition = false
         }.launchIn(viewModelScope)
     }
