@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">News App</string>
+    <string name="app_name">DailyLens</string>
     <string name="title_activity_first">FirstActivity</string>
 </resources>
