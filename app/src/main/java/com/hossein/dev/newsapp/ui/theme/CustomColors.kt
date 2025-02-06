@@ -23,4 +23,4 @@ data class CustomColors(
     val colorLinkText: Color = Color.Unspecified,
 )
 
-val CustomColorsPalette = staticCompositionLocalOf { CustomColors() }
+val LocalCustomColorsPalette = staticCompositionLocalOf { CustomColors() }

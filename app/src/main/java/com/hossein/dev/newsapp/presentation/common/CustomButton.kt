@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hossein.dev.newsapp.ui.theme.CustomColorsPalette
-import com.hossein.dev.newsapp.ui.theme.NewsAppTheme
+import com.hossein.dev.newsapp.ui.theme.LocalCustomColorsPalette
+import com.hossein.dev.newsapp.ui.theme.AppTheme
 
 @Composable
 fun HButton(
@@ -54,7 +54,7 @@ fun HTextButton(
     Button(
         modifier = modifier,
         colors = ButtonDefaults.textButtonColors(
-            contentColor = CustomColorsPalette.current.colorGrey500
+            contentColor = LocalCustomColorsPalette.current.colorGrey500
         ),
         shape = RoundedCornerShape(8.dp),
         onClick = onClick
@@ -73,7 +73,7 @@ fun HTextButton(
 @Preview(showBackground = true)
 @Composable
 private fun HButtonPreview() {
-    NewsAppTheme {
+    AppTheme {
         HButton(buttonText = "Click me ...",) {
 
         }
@@ -83,7 +83,7 @@ private fun HButtonPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun HTextButtonPreview() {
-    NewsAppTheme {
+    AppTheme {
         HTextButton(buttonText = "Click me ...",) {
 
         }
