@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.hossein.dev.newsapp.R
 import com.hossein.dev.newsapp.presentation.navigation.NavGraph
-import com.hossein.dev.newsapp.ui.theme.NewsAppTheme
+import com.hossein.dev.newsapp.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,8 +28,11 @@ class MainActivity : ComponentActivity() {
             setKeepOnScreenCondition { viewModel.splashCondition }
         }
 
-        val statusBarColor = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
-            resources.getColor(R.color.primary) else resources.getColor(R.color.primary, theme)
+        val statusBarColor =
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) resources.getColor(R.color.primary) else resources.getColor(
+                R.color.primary,
+                theme
+            )
 
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(
@@ -39,8 +42,8 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            NewsAppTheme {
-                Box(Modifier.padding(0.dp)) {
+            AppTheme {
+                Box(modifier = Modifier.padding(0.dp)) {
                     NavGraph(
                         startDestination = viewModel.startDestination
                     )

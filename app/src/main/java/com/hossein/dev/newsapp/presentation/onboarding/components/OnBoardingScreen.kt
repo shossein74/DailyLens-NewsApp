@@ -1,7 +1,6 @@
 package com.hossein.dev.newsapp.presentation.onboarding.components
 
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -26,10 +25,9 @@ import com.hossein.dev.newsapp.presentation.common.HButton
 import com.hossein.dev.newsapp.presentation.common.HTextButton
 import com.hossein.dev.newsapp.presentation.common.WormIndicator
 import com.hossein.dev.newsapp.presentation.onboarding.onboardingPages
-import com.hossein.dev.newsapp.ui.theme.NewsAppTheme
+import com.hossein.dev.newsapp.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
     event: (OnBoardingEvent) -> Unit,
@@ -94,7 +92,6 @@ fun OnBoardingScreen(
 }
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ActionButtons(pagerState: PagerState, totalPages: Int, event: (OnBoardingEvent) -> Unit) {
     val scope = rememberCoroutineScope()
@@ -130,7 +127,7 @@ private fun ActionButtons(pagerState: PagerState, totalPages: Int, event: (OnBoa
 @Preview
 @Composable
 private fun OnBoardingScreenPreview() {
-    NewsAppTheme {
+    AppTheme {
         OnBoardingScreen(event = {})
     }
 }

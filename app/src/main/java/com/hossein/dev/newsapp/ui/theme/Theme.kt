@@ -1,6 +1,5 @@
 package com.hossein.dev.newsapp.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -65,7 +64,7 @@ val customColorsDark = CustomColors(
 )
 
 @Composable
-fun NewsAppTheme(
+fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
@@ -87,7 +86,7 @@ fun NewsAppTheme(
 
 
     CompositionLocalProvider(
-        CustomColorsPalette provides customColorsPalette
+        LocalCustomColorsPalette provides customColorsPalette
     ) {
         MaterialTheme(
             colorScheme = colorScheme,

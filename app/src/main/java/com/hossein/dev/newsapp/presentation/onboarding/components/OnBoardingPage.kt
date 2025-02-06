@@ -1,6 +1,5 @@
 package com.hossein.dev.newsapp.presentation.onboarding.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hossein.dev.newsapp.presentation.onboarding.Page
 import com.hossein.dev.newsapp.presentation.onboarding.onboardingPages
-import com.hossein.dev.newsapp.ui.theme.NewsAppTheme
+import com.hossein.dev.newsapp.ui.theme.AppTheme
 
 @Composable
 fun OnBoardingPage(
@@ -65,7 +64,7 @@ fun OnBoardingPage(
 @Preview()
 @Composable
 fun OnBoardingPagePreview() {
-    NewsAppTheme {
+    AppTheme {
         OnBoardingPage(
             page = onboardingPages[0]
         )

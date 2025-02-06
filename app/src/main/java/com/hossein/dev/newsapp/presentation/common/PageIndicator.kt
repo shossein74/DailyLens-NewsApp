@@ -21,10 +21,9 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.colorspace.ColorSpaces
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.hossein.dev.newsapp.ui.theme.CustomColorsPalette
+import com.hossein.dev.newsapp.ui.theme.LocalCustomColorsPalette
 
 @Composable
 fun PageIndicator(
@@ -33,7 +32,7 @@ fun PageIndicator(
     selectedPage: Int,
     indicatorSize: Int = 8,
     selectedColor: Color = MaterialTheme.colorScheme.primary,
-    unselectedColor: Color = CustomColorsPalette.current.colorGrey300
+    unselectedColor: Color = LocalCustomColorsPalette.current.colorGrey300
 ) {
     Row(
         modifier = modifier,
@@ -55,7 +54,6 @@ fun PageIndicator(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 private fun Modifier.wormTransition(
     pagerState: PagerState,
     color: Color,
@@ -77,7 +75,6 @@ private fun Modifier.wormTransition(
     drawPath(path = path, color = color)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WormIndicator(
     count: Int,
