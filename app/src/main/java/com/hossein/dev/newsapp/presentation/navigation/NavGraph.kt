@@ -1,12 +1,12 @@
 package com.hossein.dev.newsapp.presentation.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.hossein.dev.newsapp.presentation.navigator.NavigatorScreen
 import com.hossein.dev.newsapp.presentation.onboarding.components.OnBoardingScreen
 import com.hossein.dev.newsapp.presentation.onboarding.components.OnBoardingViewModel
 
@@ -33,11 +33,11 @@ fun NavGraph(
         }
 
         navigation(
-            route = Route.NewsNavigation.route,
-            startDestination = Route.NewsNavigatorScreen.route
+            route = Route.MainNavigation.route,
+            startDestination = Route.NavigatorScreen.route
         ) {
-            composable(route = Route.NewsNavigatorScreen.route) {
-                Text(text = "News Screen")
+            composable(route = Route.NavigatorScreen.route) {
+                NavigatorScreen()
             }
         }
     }
