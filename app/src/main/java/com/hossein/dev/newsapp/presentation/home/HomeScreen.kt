@@ -13,48 +13,38 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import com.hossein.dev.newsapp.R
-import com.hossein.dev.newsapp.domain.model.Article
-import com.hossein.dev.newsapp.ui.theme.LocalCustomColorsPalette
+import com.hossein.dev.newsapp.data.remote.ArticlePagingState
+import com.hossein.dev.newsapp.presentation.home.article.ArticleList
 import com.hossein.dev.newsapp.util.defaultSize
 import com.hossein.dev.newsapp.util.largeSize
 import com.hossein.dev.newsapp.util.semiLargeSize
-import com.hossein.dev.newsapp.util.semiSmallSize
 import com.hossein.dev.newsapp.util.smallSize
 
 @Composable
-fun HomeScreen(articles: LazyPagingItems<Article>, modifier: Modifier = Modifier) {
+fun HomeScreen(articles: ArticlePagingState, modifier: Modifier = Modifier) {
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
-            .padding(top = defaultSize)
+            .padding(top = smallSize)
             .padding(horizontal = defaultSize)
             .statusBarsPadding()
     ) {
@@ -73,7 +63,10 @@ fun HomeScreen(articles: LazyPagingItems<Article>, modifier: Modifier = Modifier
             Spacer(modifier = Modifier.width(smallSize))
             Text(
                 text = "DailyLens",
-                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold, fontSize = 16.sp),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                ),
                 color = MaterialTheme.colorScheme.primary
             )
         }
@@ -87,9 +80,20 @@ fun HomeScreen(articles: LazyPagingItems<Article>, modifier: Modifier = Modifier
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
-            onValueChange = { value -> Log.v("Search text", value)},
-            placeholder = { Text("Search news", style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp)) },
-            leadingIcon = { Icon(Icons.Rounded.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface) },
+            onValueChange = { value -> Log.v("Search text", value) },
+            placeholder = {
+                Text(
+                    "Search news",
+                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp)
+                )
+            },
+            leadingIcon = {
+                Icon(
+                    Icons.Rounded.Search,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            },
             singleLine = true,
             shape = RoundedCornerShape(smallSize),
             colors = TextFieldDefaults.colors(
@@ -97,7 +101,13 @@ fun HomeScreen(articles: LazyPagingItems<Article>, modifier: Modifier = Modifier
                 focusedContainerColor = MaterialTheme.colorScheme.background,
             ),
 
+            )
+
+        Spacer(
+            modifier = Modifier.height(defaultSize)
         )
+
+        ArticleList(modifier = Modifier.fillMaxSize(), state = articles)
     }
 }
 
