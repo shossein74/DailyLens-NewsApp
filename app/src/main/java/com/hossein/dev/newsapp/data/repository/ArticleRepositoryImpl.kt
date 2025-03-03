@@ -8,8 +8,9 @@ import com.hossein.dev.newsapp.data.remote.ArticlePagingSource
 import com.hossein.dev.newsapp.domain.model.Article
 import com.hossein.dev.newsapp.domain.repository.ArticleRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class ArticleRepositoryImpl(
+class ArticleRepositoryImpl @Inject constructor(
     private val apis: NewsApis
 ): ArticleRepository {
 

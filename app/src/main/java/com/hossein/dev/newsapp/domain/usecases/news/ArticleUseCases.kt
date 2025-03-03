@@ -1,5 +1,7 @@
 package com.hossein.dev.newsapp.domain.usecases.news
 
-data class ArticleUseCases (
+import javax.inject.Inject
+
+data class ArticleUseCases @Inject constructor(
     val getArticles: GetArticlesUseCase
 )
