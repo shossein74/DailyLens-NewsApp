@@ -10,6 +10,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -33,9 +34,15 @@ fun NavigatorScreen() {
     val unselectedColor = LocalCustomColorsPalette.current.colorGrey700
 
     val navController = rememberNavController()
-    val backStack = navController.currentBackStackEntryAsState().value
+    val backStackState = navController.currentBackStackEntryAsState().value
     val pageIndex = rememberSaveable { mutableIntStateOf(0) }
-
+    pageIndex.intValue = when (backStackState?.destination?.route) {
+        Route.HomeScreen.route -> 0
+        Route.ExplorerScreen.route -> 1
+        Route.BookmarkScreen.route -> 2
+        Route.ProfileScreen.route -> 3
+        else -> 0
+    }
     Scaffold(
         bottomBar = {
             CustomNavigationBar(
@@ -44,6 +51,7 @@ fun NavigatorScreen() {
                 currentSelectedIndex = pageIndex.intValue,
                 onClickItem = { newIndex ->
                     pageIndex.intValue = newIndex
+                    navigateToBottomNavItem(navController, newIndex)
                 }
             )
         }
@@ -56,7 +64,8 @@ fun NavigatorScreen() {
                composable(Route.HomeScreen.route) {
                    val viewModel = hiltViewModel<HomeViewModel>()
                    val articles = viewModel.articles.collectAsLazyPagingItems()
-                   HomeScreen(articles)
+                   val newState = viewModel.getArticlePagingState(articles)
+                   HomeScreen(newState)
                }
                composable(Route.ExplorerScreen.route) {
                    //val viewModel = hiltViewModel<ExplorerViewModel>()
@@ -72,6 +81,18 @@ fun NavigatorScreen() {
                }
            }
         }
+    }
+}
+
+fun navigateToBottomNavItem(navController: NavController, newIndex: Int) {
+    navController.navigate(navigationBarItems[newIndex].route) {
+        navController.graph.startDestinationRoute?.let { route ->
+            popUpTo(route) {
+                saveState = true
+            }
+        }
+        launchSingleTop = true
+        restoreState = true
     }
 }
 
