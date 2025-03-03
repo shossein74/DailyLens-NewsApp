@@ -7,7 +7,10 @@ import retrofit2.Response
 
 object ApiHandler {
 
-    suspend fun <T> invoke(dispatcher: CoroutineDispatcher = Dispatchers.IO, apiFunc: suspend () -> Response<T>, ): ApiResult<T> {
+    suspend fun <T> invoke(
+        dispatcher: CoroutineDispatcher = Dispatchers.IO,
+        apiFunc: suspend () -> Response<T>,
+    ): ApiResult<T> {
         return withContext(dispatcher) {
             return@withContext try {
                 val apiResponse = apiFunc.invoke()
@@ -16,8 +19,13 @@ object ApiHandler {
                     apiResponse.isSuccessful && apiResponse.body() != null -> {
                         ApiResult.Success(apiResponse.body()!!)
                     }
+
                     else -> {
-                        ApiResult.Failed(apiResponse.code(), apiResponse.message())
+                        val responseJson =
+                            apiResponse.errorBody()?.source()?.readByteArray()?.decodeToString()
+                                ?: apiResponse.message() ?: ""
+
+                        ApiResult.Failed(apiResponse.code(), responseJson)
                     }
                 }
             } catch (e: Exception) {
@@ -28,8 +36,8 @@ object ApiHandler {
 }
 
 sealed class ApiResult<T> {
-    data class Success<T>(val result: T): ApiResult<T>()
-    data class Failed<T>(val statusCode: Int, val errorMessage: String?): ApiResult<T>() {
+    data class Success<T>(val result: T) : ApiResult<T>()
+    data class Failed<T>(val statusCode: Int, val errorMessage: String?) : ApiResult<T>() {
 
         override fun toString(): String {
             return "$statusCode:${errorMessage ?: ""}"
