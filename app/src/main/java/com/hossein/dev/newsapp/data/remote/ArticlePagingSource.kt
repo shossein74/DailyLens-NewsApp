@@ -9,6 +9,7 @@ class ArticlePagingSource(
     private val sources: String
 ) : PagingSource<Int, Article>() {
     private var totalFetchedCount = 0
+    private var pageSize = 15
 
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -22,7 +23,7 @@ class ArticlePagingSource(
 
         return try {
             val newsResponse = ApiHandler.invoke {
-                newsApis.getNews(page = page, sources = sources)
+                newsApis.getNews(page = page, sources = sources, pageSize = pageSize)
             }
 
             when (newsResponse) {

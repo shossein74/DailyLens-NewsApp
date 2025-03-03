@@ -10,6 +10,7 @@ interface NewsApis {
     @GET("everything")
     suspend fun getNews(
         @Query("page") page: Int,
-        @Query("sources") sources: String,
+        @Query("q") sources: String,
+        @Query("pageSize") pageSize: Int,
     ): Response<NewsResponse>
 }
